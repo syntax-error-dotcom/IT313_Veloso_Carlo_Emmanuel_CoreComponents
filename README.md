@@ -1,56 +1,36 @@
-# Welcome to your Expo app 👋
+# IT313 Lab 6: Student Directory Viewer
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## The Problem
 
-## Get started
+The IT313 registrar has given you a list of students who need academic advising this term. Your task is to build a 
+small Expo (React Native) screen that lets an adviser browse and search this list, in the style of a real student
+directory app.
 
-1. Install dependencies
+## Component Structure
 
-   ```bash
+**StudentCard** (`src/components/StudentCard.tsx`)
+- Displays one student: a `View` containing an `Image` and two `Text` elements (name and year).
+- Receives `id`, `name`, `year`, `photoUrl`, `flagged`, and `onToggleFlag` as props.
+- Has a `Pressable` flag button. Its style is a function of `({ pressed })` and also changes color based on `flagged`.
+- It does not own any state. It only tells the parent when its button is pressed.
+
+**StudentDirectory** (`src/components/StudentDirectory.tsx`)
+- The parent component. It holds the `students` array and the search `query` in state.
+- Has a `TextInput` (controlled with `value` and `onChangeText`) for searching.
+- Filters the students by name (case-insensitive) and renders one `StudentCard` per match inside a `ScrollView`, using `.map()` with `key={student.id}`.
+- Provides `toggleFlag`, which updates a student's `flagged` value in state.
+
+**index.tsx** (`src/app/index.tsx`)
+- The app entry screen. It renders `<StudentDirectory />`.
+
+## How to Run
+
+1. Install dependencies:
+   ```
    npm install
    ```
-
-2. Start the app
-
-   ```bash
+2. Start the app:
+   ```
    npx expo start
    ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+3. Open it in Expo Go on your phone (scan the QR code) or press `a` / `i` for an emulator.
